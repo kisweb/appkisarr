@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+ <!-- Page header with logo and tagline-->
+ <header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Welcome to CAOSP de Ziguinchor!</h1>
+            <p class="lead mb-0">Bienvenue ! Le nouveau site web du Centre Académique de l’Orientation Scolaire et Professionnelle (C.A.O.S.P.) de Ziguinchor.</p>
+        </div>
+    </div>
+</header>
+<!-- Page content-->
+<div class="container">
+    <div class="row">
+        <!-- Blog entries-->
+        <div class="col-lg-8">
+            <!-- Featured blog post-->
+
+            {% if msg %}
+                
+            <p class="display-6">{{msg}}</p>
+                
+                    
+                {% endif %}
+
+            {% comment %} <div class="card mb-4">
+                <a href="#!"><img class="card-img-top" src="{{f_blog.thumbnail.url}}" alt="..." /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{f_blog.created}}</div>
+                    <h2 class="card-title">{{f_blog.title}}</h2>
+                    <p class="card-text">{{f_blog.body|truncatechars:"300"}}</p>
+                    <a class="btn btn-primary" href="{% url 'detail' f_blog.slug %}">Read more →</a>
+                </div>
+            </div> {% endcomment %}
+          
+            <div class="row">
+
+                
+                
+                    
+
+                
+                {% for blog in blogs  %}
+
+                <div class="col-lg-6">
+                    <!-- Blog post-->
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="{{blog.thumbnail.url}}" alt="..." /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">{{blog.created|date:"d/m/Y"}}</div>
+                            <h2 class="card-title h4">{{blog.title}}</h2>
+                            <p class="card-text">{{blog.body|truncatechars:"100"}}</p>
+                            <a class="btn btn-primary" href="{% url 'detail' blog.slug %}">Lire →</a>
+                        </div>
+                    </div>
+                </div>
+                    
+                {% endfor %}
+                    
+                
+                
+            </div>
+            <!-- Pagination-->
+
+            
+          
+            <nav aria-label="Pagination">
+                <hr class="my-0" />
+                <ul class="pagination justify-content-center my-4">
+                    {% comment %} <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li> {% endcomment %}
+
+                    
+                    {% if blogs.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{blogs.previous_page_number}}" 
+                        tabindex="-1" aria-disabled="true">Précédent</a></li>
+                        
+                    {% endif %}
+                        
+                    
+                    {% for page in paginator.page_range  %}
+
+                    
+                    {% if page == blogs.number %}
+
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                        
+                    {% endif %}
+                        
+
+                    
+                        
+                    {% endfor %}
+
+                    {% if blogs.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{blogs.next_page_number}}" 
+                        tabindex="-1" aria-disabled="true">Suivant</a></li>
+                        
+                    {% endif %}
+                        
+                        
+                    
+                   
+                    {% comment %} <li class="page-item"><a class="page-link" href="#!">Older</a></li> {% endcomment %}
+                </ul>
+            </nav>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Search widget-->
+            <div class="card mb-4">
+                <div class="card-header text-white bg-danger">Search</div>
+                <div class="card-body bg-success bg-gradient">
+                    <form action="">
+                        <div class="input-group" id="recherche">
+                            <input class="form-control" name="search" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                            <button class="btn btn-danger" id="button-search">Allez !</button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header text-white bg-danger">Categories</div>
+                <div class="card-body bg-success bg-gradient">
+                    <div class="row">
+
+                        
+                        {% for cat in cats  %}
+
+                        <div class="col-sm-4 bg-transparent p-2">
+                            <span class="badge rounded-pill bg-danger">{{cat.title}}</span>
+                        </div>
+                            
+                        {% endfor %}
+                            
+                        
+                       
+
+                       
+                    </div>
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header text-white bg-danger">CAOSP de Ziguinchor</div>
+                <div class="card-body  bg-success bg-gradient text-white">
+                    Ce site est dédié, d’une manière générale, à l’Orientation. Les bénéficiaires sont les élèves, les étudiants, les professionnels et même les parents.
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <strong>
+                        <b>
+                            Qu’est-ce que la psychologie ?
+
+                        </b>
+                    </strong>
+                </div>
+                <div class="card-body bg-success bg-gradient">
+                    <p class="text-white text-center p-1">La psychologie est la science qui étudie comment l’individu, sujet et acteur, perçoit, ressent, apprend, pense, aime, désire, décide, communique et agit. <br>
+                    Et en tant que pratique, elle inclut un ensemble de méthodes par lesquelles les connaissances scientifiques qu’elle développe sont mises en œuvre.
+                    </p>
+                    <hr>
+                    <p class="text-white text-center p-1">
+                        La psychologie fait partie des sciences humaines et sociales (comportement, culture et société), des sciences de la vie (fonctionnement du cerveau sous l’angle de la biologie)
+                    </p>
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4" id="contact">
+                <div class="card-header text-white bg-danger">Contactez-nous au besoin</div>
+                <div class="card-body bg-success bg-gradient">
+                    
+<form action="{% url 'index' %}" method='POST'>
+    {% csrf_token %}
+    <h4 class="text-white">Votre Message</h4>
+    <input type="hidden" name="contact" value="sendMessage" class="form-control" placeholder="Saisir ici votre Email">
+    <div class="mb-3">
+        <input type="email" name="email" class="form-control" placeholder="Saisir ici votre Email (Obligatoire)">
+    </div>
+
+      <div class="mb-3">
+        <input type="text" name="name" class="form-control" placeholder="Saisir votre nom complet (Obligatoire)">
+      </div>
+      <div class="mb-3">
+        <input type="text" name="phone" class="form-control" placeholder="Saisir votre numéro si souhaité être appelé">
+      </div>
+      <div class="mb-3">
+        <textarea type="text" name="message" class="form-control" placeholder="Rédigez votre message ... (Obligatoire)" cols="30" rows="2"></textarea>
+      </div>
+
+
+      <button class="btn btn-primary" style="width: 100%; margin: 10px auto;">Envoyer</button>       
+
+</form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

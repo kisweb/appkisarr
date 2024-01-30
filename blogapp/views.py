@@ -34,7 +34,7 @@ def index(request):
             blogs = paginator.page(1)
         
         else:
-            msg = "There is no article with the keyword"
+            msg = "Aucun article ne contient votre expression recherchée."
             
     else:
         blogs = Blog.objects.filter(featured=False)
@@ -85,7 +85,7 @@ def create_article(request):
             blog.slug = slugify(request.POST["title"])
             blog.user=request.user
             blog.save()
-            messages.success(request, "Article created successfully!")
+            messages.success(request, "Article créé avec succès !")
             return redirect("profile")
     context = {"form": form}
     return render(request, "blogapp/create.html", context)
@@ -101,7 +101,7 @@ def update_article(request, slug):
         blog = form.save(commit=False)
         blog.slug=slugify(request.POST["title"])
         blog.save()
-        messages.success(request, "Article updated successfully")
+        messages.success(request, "Article mis à jour correctement")
         return redirect("profile")
     context={"update":update, "form":form}
     return render(request, "blogapp/create.html", context)
@@ -114,7 +114,7 @@ def delete_article(request, slug):
     delete_article = True
     if request.method == 'POST':
         blog.delete()
-        messages.success(request, "Article deleted successfully")
+        messages.success(request, "Article supprimé sans regret")
         return redirect("profile")
     context = {"blog": blog, "del":delete_article, "blogs": blogs}
     return render(request, "core/profile.html", context)
